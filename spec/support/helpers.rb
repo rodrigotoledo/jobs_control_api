@@ -23,11 +23,20 @@ Shoulda::Matchers.configure do |config|
 end
 
 module SessionHelpers
-  def sign_in(user, password = 'password123')
+  def sign_in(user, password = PASSWORD_FOR_USER)
     post sign_in_path, params: { email: user.email, password: password}
   end
 
   def logout
     delete logout_path
+  end
+end
+
+
+RSpec.configure do |config|
+  config.include SessionHelpers, type: :request
+  config.before(:suite) do
+    # Defina a senha do usuário como uma constante
+    PASSWORD_FOR_USER = 'password123'.freeze
   end
 end

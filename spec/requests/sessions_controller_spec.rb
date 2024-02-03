@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe 'Sessions', type: :request do
-  let(:user) { create(:user) }
+  let!(:user) { create(:user) }
 
   describe 'POST /sign_in' do
     context 'with valid credentials' do
       it 'logs in the user' do
-        sign_in user
+        post sign_in_path, params: {email: user.email, password: PASSWORD_FOR_USER}
         expect(response).to have_http_status(:created)
         expect(session[:user_id]).to eq(user.id)
       end
@@ -14,7 +14,7 @@ RSpec.describe 'Sessions', type: :request do
 
     context 'with invalid credentials' do
       it 'returns unprocessable entity' do
-        sign_in user, 'wrong_password'
+        post sign_in_path, params: {email: user.email, password: '123'}
         expect(response).to have_http_status(:unprocessable_entity)
         expect(session[:user_id]).to be_nil
       end
@@ -25,8 +25,8 @@ RSpec.describe 'Sessions', type: :request do
     before do
       sign_in user
     end
-    it 'logs out the user' do
-      logout
+    it 'logout the user' do
+      delete logout_path
       expect(response).to have_http_status(:no_content)
       expect(session[:user_id]).to be_nil
     end
