@@ -7,7 +7,6 @@ Rails.application.routes.draw do
 
     member do
       post 'apply'
-      delete 'unapply'
 
       post 'apply_user/:user_id', to: 'jobs#apply_user'
       delete 'unapply_user/:user_id', to: 'jobs#unapply_user'
