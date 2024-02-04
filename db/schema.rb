@@ -22,8 +22,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_03_095449) do
   end
 
   create_table "jobs", force: :cascade do |t|
-    t.string "title"
+    t.string "title", null: false
     t.integer "user_id", null: false
+    t.text "description", null: false
+    t.string "company", null: false
+    t.string "location", null: false
+    t.string "job_type", null: false
+    t.string "category", null: false
+    t.decimal "salary", precision: 10, scale: 2
+    t.text "requirements", null: false
+    t.text "responsibilities", null: false
+    t.string "status", default: "open", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_jobs_on_user_id"

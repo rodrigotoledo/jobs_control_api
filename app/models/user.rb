@@ -9,7 +9,7 @@ class User < ApplicationRecord
 
 
   # jobs that are created by the user
-  has_many :created_jobs, class_name: 'Job', foreign_key: :user_id
+  has_many :jobs, class_name: 'Job', foreign_key: :user_id
 
   # jobs that are trying to apply
   has_many :applications, foreign_key: :user_id

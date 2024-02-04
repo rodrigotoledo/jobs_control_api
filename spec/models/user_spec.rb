@@ -24,12 +24,11 @@ RSpec.describe User, type: :model do
 
   describe 'associations' do
     let(:user) { create(:user) }
-    let!(:created_jobs) { create_list(:job, 3, user: user) }
+    let!(:jobs) { create_list(:job, 3, user: user) }
 
     let!(:jobs_with_applications) do
       jobs = create_list(:job, 2)
       jobs.each { |job| create(:application, user: user, job: job, status: :pending) }
-      jobs.each { |job| create(:application, user: user, job: job, status: :rejected) }
       jobs
     end
 
@@ -44,9 +43,9 @@ RSpec.describe User, type: :model do
     end
 
     describe 'associations' do
-      it 'has many created_jobs, applied_jobs, and working_jobs' do
-        expect(user.created_jobs).to match_array(created_jobs)
-        expect(user.applied_jobs.size).to eql(6)
+      it 'has many jobs, applied_jobs, and working_jobs' do
+        expect(user.jobs).to match_array(jobs)
+        expect(user.applied_jobs.size).to eql(4)
         expect(user.working_jobs).to match_array(jobs_with_approved_applications)
       end
     end
