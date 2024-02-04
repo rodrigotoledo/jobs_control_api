@@ -1,15 +1,14 @@
 Rails.application.routes.draw do
-  resources :jobs do
+  resources :jobs, except: [:edit] do
     collection do
-      get 'applications'
       get 'applieds'
     end
 
     member do
       post 'apply'
 
-      post 'apply_user/:user_id', to: 'jobs#apply_user'
-      delete 'unapply_user/:user_id', to: 'jobs#unapply_user'
+      post 'apply_user/:user_id', to: 'jobs#apply_user', as: :apply_user
+      delete 'unapply_user/:user_id', to: 'jobs#unapply_user', as: :unapply_user
     end
   end
   post 'sign_up', to: 'registrations#create', as: :sign_up
